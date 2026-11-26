@@ -1,0 +1,31 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'co.edu.udistrital.velenito.mobile'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'co.edu.udistrital.velenito.mobile'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0.0'
+        manifestPlaceholders = [receiptHost: providers.gradleProperty('receiptHost').getOrElse('localhost')]
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    testOptions { unitTests.includeAndroidResources = true }
+    buildFeatures { buildConfig true }
+    buildTypes {
+        debug { manifestPlaceholders.cleartextAllowed = 'true' }
+        release { manifestPlaceholders.cleartextAllowed = 'false'; minifyEnabled false }
+    }
+}
+
+dependencies {
+    // Align the scanner's older Kotlin runtime with AndroidX's runtime.
+    implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.22')
+    implementation 'androidx.activity:activity:1.9.3'
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
+    testImplementation 'org.json:json:20240303'
+}
